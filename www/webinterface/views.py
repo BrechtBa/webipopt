@@ -49,5 +49,4 @@ class LogoutView(RedirectView):
 		return super(LogoutView, self).get(request, *args, **kwargs)
 		
 class DashboardView(TemplateView):
-    template_name = 'webinterface/dashboard.html'
-	
+	template_name = 'webinterface/dashboard.html'
