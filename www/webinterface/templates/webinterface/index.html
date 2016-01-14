@@ -1,0 +1,11 @@
+{% extends 'webinterface/base.html' %}
+
+{% block headline %}<h1>Web IPopt</h1>{% endblock headline %}
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+		<div>{{user.token}}</div>
+	{% endif %}
+	
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'webinterface/base.html' %}
+
+{% block title %}Register | {{ block.super }}{% endblock %}
+
+{% block headline %}<h1>Register to recieve an API key</h1>{% endblock headline %}
+
+{% block content %}
+	    <form class="RegistrationForm" action="" method="POST">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Register">
+		</form>
+{% endblock %}
+
+
