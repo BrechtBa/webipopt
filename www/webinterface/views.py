@@ -4,8 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse_lazy
 
-from myauth.models import User
-from myauth.forms import UserCreationForm
+from customauth.models import User
+from customauth.forms import UserCreationForm
 
 class Index(TemplateView):
     template_name = 'webinterface/index.html'

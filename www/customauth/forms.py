@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth import password_validation
 
-from myauth.models import User
+from .models import User
 
 
 class UserCreationForm(forms.ModelForm):

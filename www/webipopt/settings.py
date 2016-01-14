@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 	'api.apps.ApiConfig',
 	'webinterface.apps.WebinterfaceConfig',
-	'myauth.apps.MyauthConfig',
+	'customauth.apps.CustomauthConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'myauth.User'
+AUTH_USER_MODEL = 'customauth.User'
 
 LOGIN_URL = 'webinterface:login'
 LOGIN_REDIRECT_URL = 'webinterface:login'
