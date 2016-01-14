@@ -1,0 +1,10 @@
+{% extends 'webinterface/base.html' %}
+
+{% block headline %}<h1>Dashboard</h1>{% endblock headline %}
+
+{% block content %}
+
+		<div>Email: {{user.email}}</div>
+		<div>Token: {{user.token}}</div>
+	
+{% endblock %}
