@@ -9,6 +9,8 @@ from django import forms
 import hashlib
 import random
 
+from api.models import Token
+
 class UserManager(BaseUserManager):
 
 	def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
@@ -19,6 +21,7 @@ class UserManager(BaseUserManager):
 		
 		user = self.model(email=email, is_staff=is_staff, is_active=True, is_superuser=is_superuser, last_login=now, date_joined=now, **extra_fields)
 		user.set_password(password)
+		
 		user.initialize_api_properties()
 		
 		user.save(using=self._db)
@@ -44,12 +47,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 	is_active = models.BooleanField(_('active'), default=False,help_text=_('Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'))
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 	
-	token = models.CharField(_('token'), max_length=200, blank=True, null=True)
-	daily_computation_time = models.IntegerField(_('daily computation time'), default=0)
-	used_computation_time = models.IntegerField(_('used computation time'), default=0)
-	last_api_call = models.DateTimeField(_('last api call'), default=timezone.now)
-	
-	
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = []
 	
@@ -62,10 +59,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 	def get_short_name(self):
 		self.first_name
 
-	def generate_token(self):
-		# generate a token
-		self.token = hashlib.sha1( (str(random.random()) + self.email + str(random.random())).encode('utf-8') ).hexdigest()
-	
-	def initialize_api_properties(self):
-		self.generate_token()
-		self.daily_computation_time = 600
+	def add_token(self):
+		# assign a token to the user
+		t = Token(user=self,daily_computation_time=600)
+		t.token = t.generate_token(self.email)
+		t.save()

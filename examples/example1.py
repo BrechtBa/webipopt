@@ -1,21 +1,26 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-import urllib.parse
-import urllib.request
 import json
-
-
+try:
+	# python 3 imports
+	from urllib.parse import urlencode
+	import urllib.request as request
+except:
+	# python 2 imports
+	from urllib import urlencode
+	import urllib2 as request
+	
+	
 # load the problem from a file in json format
 with open('example1.json', 'r') as jsonfile:
-    problemstring=jsonfile.read().replace('\n', '').replace('\t', ' ')
+	problemstring=jsonfile.read().replace('\n', '').replace('\t', ' ')
 	
-
 # prepare the data and make a post request	
-token = 'abcd0.123='
-data = urllib.parse.urlencode({'problem': problemstring }).encode('UTF-8')
-url = urllib.request.Request('http://localhost:8000/api/{}/'.format(token), data)
-
+token = '37f2260f7c2f0bce704672be0274feca30b7b6e2'
+data = urlencode({'problem': problemstring }).encode('UTF-8')
+url = request.Request('http://localhost:8000/api/{}/'.format(token), data)
 
 # handle the response
-responseData = urllib.request.urlopen(url).read().decode('utf8', 'ignore')
+responseData = request.urlopen(url).read().decode('utf8', 'ignore')
 print( responseData )
+	

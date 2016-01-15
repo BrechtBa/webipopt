@@ -41,8 +41,10 @@ class UserCreationForm(forms.ModelForm):
 	def save(self, commit=True):
 		user = super(UserCreationForm, self).save(commit=False)
 		user.set_password(self.cleaned_data["password1"])
-		user.initialize_api_properties()
 		
 		if commit:
 			user.save()
+		
+		user.add_token()
+		
 		return user

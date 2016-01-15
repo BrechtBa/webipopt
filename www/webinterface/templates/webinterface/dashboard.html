@@ -4,67 +4,34 @@
 
 {% block content %}
 
-		<div>Token: {{user.token}}</div>
-		<div>Example API call: http://webipopt.duckdns.org/api/{{user.token}}/</div>
-		<div>Daily computation time: {{user.daily_computation_time}} s</div>
-		<div>Time used today: {{user.used_computation_time}} s</div>
+		<div class="tokens">
+			<h2>Tokens</h2>
+		{% for token in tokens %}
+			<div class="token">
+				<div>Token: {{token.token}}</div>
+				<div>Example API call: http://webipopt.duckdns.org/api/{{token.token}}/</div>
+				<div>Daily computation time: {{token.daily_computation_time}} s</div>
+				<div>Time used today: {{token.used_computation_time}} s</div>
+			</div>
+		{% endfor %}
+		</div>
 		
 		<div>
-			<form id="api-interface">
-				<div>
-					<label for="json-problem">Problem definition in JSON format</label>
-					<textarea id="json-problem" rows="20" cols="80"></textarea>
-				</div>
-				<input type="submit" value="submit"/>
-			</form>
-			<div id="response">
+			<div class="problem">
+				<h2>Problem definition</h2>
+				<form action="/api/{{tokens.0.token}}/?next=/dashboard/" method="post">
+					<div>
+						<label for="problem">Problem definition in JSON format</label></br>
+						<textarea id="problem" name="problem" rows="20" cols="80">{{tokens.0.last_supplied_problem}}</textarea>
+					</div>
+					<input type="submit" value="submit"/>
+				</form>
 			</div>
-			<script>
-				apiCall = function(e){
-					if(e.preventDefault){
-						e.preventDefault();
-					}
-					var token = '{{user.token}}'
-					console.log(token);
-					
-					// get the problem
-					var problem = document.getElementById('json-problem').value;
-					
-					// create the ajax request
-					var xhttp;
-					if (window.XMLHttpRequest) {
-						xhttp = new XMLHttpRequest();
-					}
-					else {
-						// code for IE6, IE5
-						xhttp = new ActiveXObject('Microsoft.XMLHTTP');
-					}
-					
-					xhttp.open('POST', '../api/'+token+'/', true);
-					xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-					xhttp.send( 'problem='+encodeURIComponent(problem) );
-					
-					console.log(xhttp)
-					xhttp.onreadystatechange = function(e){
-						if(xhttp.status == 200){
-							document.getElementById('response').innerHTML = xhttp.responseText;
-						}
-						else{
-							document.getElementById('response').innerHTML = 'an error occurred';
-						}
-					}
-					
-					return false;
-				}
-				// bind the function to the form submit event
-				var apiInterface = document.getElementById('api-interface');
-				if(apiInterface.attachEvent) {
-					apiInterface.attachEvent('submit', apiCall);
-				}
-				else {
-					apiInterface.addEventListener('submit', apiCall);
-				}
-			</script>
+			<div class="response">
+				<h2>Response</h2>
+				{{tokens.0.last_solution}}
+			</div>
+		
 		</div>
 		
 {% endblock %}
