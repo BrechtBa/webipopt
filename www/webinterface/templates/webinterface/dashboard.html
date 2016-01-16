@@ -19,17 +19,22 @@
 		<div>
 			<div class="problem">
 				<h2>Problem definition</h2>
-				<form action="/api/{{tokens.0.token}}/?next=/dashboard/" method="post">
+				<form action="/dashboard/" method="post">
+					{% csrf_token %}
+					<div>
+						<label for="token">Token</label></br>
+						<input type="text" id="token" name="token" value="{{tokens.0.token}}"/>
+					</div>
 					<div>
 						<label for="problem">Problem definition in JSON format</label></br>
-						<textarea id="problem" name="problem" rows="20" cols="80">{{tokens.0.last_supplied_problem}}</textarea>
+						<textarea id="problem" name="problem" rows="20" cols="80">{{problem}}</textarea>
 					</div>
 					<input type="submit" value="submit"/>
 				</form>
 			</div>
 			<div class="response">
 				<h2>Response</h2>
-				{{tokens.0.last_solution}}
+				{{response}}
 			</div>
 		
 		</div>

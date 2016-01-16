@@ -18,8 +18,6 @@ class Token(models.Model):
 	daily_computation_time = models.IntegerField(_('daily computation time'), default=0)
 	used_computation_time = models.IntegerField(_('used computation time'), default=0)
 	last_api_call = models.DateTimeField(_('last api call'), default=timezone.now)
-	last_supplied_problem = models.TextField(_('last supplied problem'),default='{\n\t"variables":[],\n\t"parameters":[],\n\t"constraints":[],\n\t"objective":[]\n}', null=True)
-	last_solution = models.TextField(_('last calculated solution'),default='', null=True)
 	
 	def generate_token(self,data):
 		return hashlib.sha1( (str(random.random()) + data + str(random.random())).encode('utf-8') ).hexdigest()
@@ -27,4 +25,5 @@ class Token(models.Model):
 	def check_reset_used_computation_time(self):
 		if self.last_api_call < timezone.now().replace(hour=0, minute=0, second=0, microsecond=0):
 			self.used_computation_time = 0
+			self.last_api_call = timezone.now()
 			self.save()

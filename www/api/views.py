@@ -31,9 +31,7 @@ def index(request,token):
 			else:
 				start = time.time()
 				if 'problem' in request.POST:
-					token.last_supplied_problem = request.POST['problem']
-					token.save()
-					json_problem = token.last_supplied_problem
+					json_problem = request.POST['problem']
 					
 					try:
 						problem = parsenlp.Problem(json_problem)
@@ -58,20 +56,12 @@ def index(request,token):
 		
 				# update the computation time
 				end = time.time()
+
 				token.used_computation_time += int( end-start )
 				token.save()
 		
 			# check if the limit was not exceeded
 			if token.used_computation_time > token.daily_computation_time:
 				response = 'Limit exeeded during this call'
-			else:
-				token.last_solution = response
-				token.save()
 
-	# check if there is a get request
-	next = request.GET.get('next', '')
-	print(next)
-	if next != '':
-		return HttpResponseRedirect(next)
-	else:
-		return HttpResponse( response )
+	return HttpResponse( response )
