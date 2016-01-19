@@ -21,10 +21,10 @@ class UserManager(BaseUserManager):
 		
 		user = self.model(email=email, is_staff=is_staff, is_active=True, is_superuser=is_superuser, last_login=now, date_joined=now, **extra_fields)
 		user.set_password(password)
-		
-		user.initialize_api_properties()
-		
 		user.save(using=self._db)
+		
+		user.add_token()
+		
 		return user
 
 	def create_user(self, email, password=None, **extra_fields):
