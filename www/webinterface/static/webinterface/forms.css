@@ -1,0 +1,18 @@
+
+form.base-form {
+	width: 60%;
+	margin: auto;
+}
+form p .helptext{
+	display: none;
+}
+form p label{
+	display: inline-block;
+	width: 50%;
+	min-width: 200px;
+}
+form input{
+	display: inline-block;
+	width: 45%;
+	min-width: 200px;
+}

@@ -1,0 +1,27 @@
+
+h2{
+	margin-bottom: 5px;
+}
+
+.token{
+	margin-bottom: 20px;
+}
+.token .label{
+	display: inline-block;
+	width: 200px;
+}
+
+.form-group{
+	margin-bottom: 10px;
+}
+.problem input[name="token"]{
+	width: 100%;
+}
+.problem textarea[name="problem"]{
+	width: 100%;
+	height: 400px;
+}
+
+.response{
+	min-height: 100px;
+}

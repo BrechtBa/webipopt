@@ -5,10 +5,13 @@
 {% block headline %}<h1>Login</h1>{% endblock headline %}
 
 {% block content %}
-	    <form class="LoginForm" action="" method="POST">
+	    <form class="base-form" action="" method="POST">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<input type="submit" value="Login">
+			<p>
+				<label for="id_login"></label>
+				<input type="submit" id="id_login" value="Login">
+			</p>
 		</form>
 {% endblock %}
 

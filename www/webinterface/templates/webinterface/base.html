@@ -3,11 +3,17 @@
 	<head>
 		<title>{% block title %}WebIPopt{% endblock title %}</title>
 		
+		
+		<link rel="stylesheet" type="text/css" href="/static/webinterface/main.css">
+		<link rel="stylesheet" type="text/css" href="/static/webinterface/forms.css">
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+		
 		{% block css %}{% endblock css %}
 	</head>
 	
 	<body>
-		<nav>
+		<div class="toolbar">
+			<h1>WebIPopt</h1>
 			<nav class="main">
 				<a href="{% url 'webinterface:index' %}">Home</a>
 			{% if user.is_authenticated %}
@@ -16,17 +22,18 @@
 			</nav>
 			<nav class="authentication">
 			{% if not user.is_authenticated %}
-				<a href="{% url 'webinterface:register' %}">Register</a>
 				<a href="{% url 'webinterface:login' %}">Login</a>
+				<a href="{% url 'webinterface:register' %}">Register</a>
 			{% else %}
 				<a href="{% url 'webinterface:logout' %}">Logout</a>
 			{% endif %}
 			</nav>
-		</nav>
-		<div>
+		</div>
+		
+		<div class="headline">
 			{% block headline %}{% endblock headline %}
 		</div>
-		<div>
+		<div class="content">
 			{% block content %}{% endblock content %}
 		</div>
 		{% block js %}{% endblock js %}

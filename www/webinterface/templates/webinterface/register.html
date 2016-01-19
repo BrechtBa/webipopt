@@ -5,10 +5,13 @@
 {% block headline %}<h1>Register to recieve an API key</h1>{% endblock headline %}
 
 {% block content %}
-	    <form class="RegistrationForm" action="" method="POST">
+	    <form class="base-form" action="" method="POST">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<input type="submit" value="Register">
+			<p>
+				<label for="id_register"></label>
+				<input id="id_register" type="submit" value="Register">
+			</p>
 		</form>
 {% endblock %}
 
