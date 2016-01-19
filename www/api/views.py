@@ -45,12 +45,13 @@ def index(request,token):
 							response = 'Limit exeeded during this call'
 						else:
 							# solve and get the solution
-							#problem.solve()
-							#sol = problem.get_value_dict()
-							solution = {'time': [1,2,3,4,5], 'x': [3,4,5,4,3], 'y': [4,5,6,6,6]}
-							
-							response = json.dumps(solution)
-
+							try:
+								problem.solve()
+								sol = problem.get_value_dict()
+								solution = {'time': [1,2,3,4,5], 'x': [3,4,5,4,3], 'y': [4,5,6,6,6]}
+								response = json.dumps(solution)
+							except:
+								response = 'Problem during the solution of the problem. Check your problem and contact the administrator.'
 				else:
 					response = 'No problem supplied'
 		
@@ -60,8 +61,8 @@ def index(request,token):
 				token.used_computation_time += int( end-start )
 				token.save()
 		
-			# check if the limit was not exceeded
-			if token.used_computation_time > token.daily_computation_time:
-				response = 'Limit exeeded during this call'
+				# check if the limit was not exceeded
+				if token.used_computation_time > token.daily_computation_time:
+					response = 'Limit exeeded during this call'
 
 	return HttpResponse( response )

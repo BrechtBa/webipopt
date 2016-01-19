@@ -19,6 +19,9 @@
 			{% if user.is_authenticated %}
 				<a href="{% url 'webinterface:dashboard' %}">Dashboard</a>
 			{% endif %}
+			{% if user.is_superuser %}
+				<a href="{% url 'admin:index' %}">Admin</a>
+			{% endif %}
 			</nav>
 			<nav class="authentication">
 			{% if not user.is_authenticated %}
