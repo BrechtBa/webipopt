@@ -37,6 +37,7 @@ cp  ~/tmp/$projectname/django ~/www/
 if [ ! -f ~/.secret_key ]; then
     echo "Create new salt"
 	echo date +%s | sha256sum | base64 | head -c 32 > ~/.secret_key	
+	chmod 700 ~/.secret_key
 fi
 secret_key=`cat ~.secret_key`
 
