@@ -5,7 +5,7 @@ import parsenlp
 import json
 import time
 
-def solve(token,json_problem):
+def ipopt(token,json_problem):
 	# check the token
 	try:
 		token = Token.objects.get(token=token)

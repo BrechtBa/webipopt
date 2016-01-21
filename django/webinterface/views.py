@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from customauth.models import User
 from customauth.forms import UserCreationForm
 from api.models import Token
-from api.solver import solve
+from api.solvers import ipopt
 
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -75,9 +75,9 @@ class DashboardView(TemplateView):
 		# get the problem from the request
 		token = request.POST['token']
 		json_problem = request.POST['problem']
-		print(json_problem)
-		# call the api
-		response = solve(token,json_problem)
+
+		# call the solver
+		response = ipopt(token,json_problem)
 		
 		tokens = Token.objects.filter(user=request.user)
 		

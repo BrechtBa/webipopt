@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Token
-from .solver import solve
+from .solvers import ipopt
 
 import parsenlp
 import json
@@ -20,7 +20,7 @@ def index(request,token):
 		response = 'No problem supplied'
 	else:
 		json_problem = request.POST['problem']
-		response = solve(token,json_problem)
+		response = ipopt(token,json_problem)
 		
 				
 		
