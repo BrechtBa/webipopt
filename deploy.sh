@@ -25,11 +25,9 @@ git clone https://github.com/BrechtBa/parsenlp.git
 cd ~/tmp/parsenlp
 python setup.py install
 
-# deactivate the virtualenv ####################################################
-deactivate
-
 # copy all files ###############################################################
-cp  ~/tmp/$projectname/django ~/www/
+cp -R ~/tmp/$projectname/django ~/
+mv ~/django ~/www
 
 # change values in settings.py #################################################
 # ~/www/$projectname/settings.py
@@ -39,27 +37,25 @@ if [ ! -f ~/.secret_key ]; then
 	echo date +%s | sha256sum | base64 | head -c 32 > ~/.secret_key	
 	chmod 700 ~/.secret_key
 fi
-secret_key=`cat ~.secret_key`
+secret_key=`cat ~/.secret_key`
 
-sed -i 's/^\(SECRET_KEY = \).*/\1$secret_key/' ~/www/$projectname/settings.py
+sed -i "s/^\(SECRET_KEY = \).*/\1'$secret_key'/" ~/www/$projectname/settings.py
 
 # set `DEBUG = False`
-sed -i 's/^\(DEBUG = \).*/\1True/' ~/www/$projectname/settings.py
+sed -i "s/^\(DEBUG = \).*/\1False/" ~/www/$projectname/settings.py
 
 # create or update the database ################################################
+cd ~/www
 python manage.py makemigrations
 python manage.py migrate
 
 # set permissions ##############################################################
-chown :www-data ~/www/db.sqlite3
 chmod 774 ~/www/db.sqlite3
-
-chown :www-data ~/www
-chmod 774 ~/www
+chmod 775 ~/www
 
 # collect static files #########################################################
 cd ~/www
-manage.py collectstatic
+python manage.py collectstatic
 
 
 # create an apache virtualhost file ############################################
@@ -75,6 +71,23 @@ echo "<VirtualHost *:80>
 			Require all granted
 		</Files>
 	</Directory>
+
+	WSGIDaemonProcess $projectname python-path=/home/$projectname/www:/home/$projectname/env/lib/python3.4/site-packages
+	WSGIProcessGroup $projectname
+	WSGIScriptAlias / /home/$projectname/www/$projectname/wsgi.py
+
 	
 </VirtualHost>" > ~/$projecturl".conf"
 
+# deactivate the virtualenv ####################################################
+# a super user still needs to be created
+python manage.py createsuperuserdeactivate
+
+deactivate
+
+# the owners need to be set with sudo rights
+# sudo chown :www-data ~/www/db.sqlite3
+# sudo chown :www-data ~/www
+
+# restart the apache server
+# sudo /etc/init.d/apache2 restart

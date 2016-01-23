@@ -36,8 +36,11 @@ def ipopt(token,json_problem):
 					try:
 						problem.solve()
 						sol = problem.get_value_dict()
-						solution = {'time': [1,2,3,4,5], 'x': [3,4,5,4,3], 'y': [4,5,6,6,6]}
-						response = json.dumps(solution)
+
+						# convert numpy arrays to lists
+	 					sol = {k:sol[k].tolist() for k in sol.keys()}
+
+						response = json.dumps(sol)
 					except:
 						response = 'Problem during the solution of the problem. Check your problem and contact the administrator.'
 	

@@ -25,8 +25,8 @@ SECRET_KEY = 'w!k+s%#+#03p9c_em13okj)pv0ami4u^0t$scko7l57__=m=+$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['webopt.duckdns.org',
+				 'webopt.duckdns.org.']
 
 # Application definition
 
@@ -124,6 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 AUTH_USER_MODEL = 'customauth.User'
 
