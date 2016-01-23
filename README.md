@@ -3,10 +3,10 @@ Web API and interface for cloud based solving or non-linear optimization problem
 
 ## demo
 An online version can be found at [webopt.duckdns.org](http://webopt.duckdns.org).
-Tokens with 10 minutes daily computation time can be optained for free by registering.
+Tokens with 10 minutes daily computation time can be obtained for free by registering.
 
 ## problem submission
-Optimization problems must be submitted in an easy to read json format parsable by `parsenlp`. An example is given below for the Hock - Schittkowski Model 71.
+Optimization problems must be submitted in an easy to read json format parsable by `parsenlp`. An example is given below for the Hock - Schittkowski model 71.
 ```
 {
 	"variables":[
