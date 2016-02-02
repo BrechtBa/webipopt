@@ -64,7 +64,7 @@ class DashboardView(TemplateView):
 		
 		context = {}
 		context['tokens'] = tokens
-		context['problem'] = '{\n\t"variables":[],\n\t"parameters":[],\n\t"constraints":[],\n\t"objective":[]\n}'
+		context['problem'] = '{\n\t"variables":[\n\t\t"x[j] for j in range(4)"\n\t],\n\t"parameters": [\n\t\t"A = 25",\n\t\t"B = 40",\n\t\t"C = 1",\n\t\t"D = 5"\n\t],\n\t"objective":\n\t\t"x[0]*x[3]*(x[0]+x[1]+x[2])+x[2]",\n\t"constraints":[\n\t\t"x[0]*x[1]*x[2]*x[3] >= A",\n\t\t"x[0]**2+x[1]**2+x[2]**2+x[3]**2 = B",\n\t\t"x[j] >= C for j in range(4)",\n\t\t"x[j] <= D for j in range(4)"\n\t]\n}'
 		context['response'] = ''
 		
 		return render(request,self.template_name,context)
